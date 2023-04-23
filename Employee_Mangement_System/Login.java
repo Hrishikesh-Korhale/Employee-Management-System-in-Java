@@ -1,8 +1,13 @@
 package Employee_Mangement_System;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
-public class Login extends JFrame{
+public class Login extends JFrame implements ActionListener {
+  JPasswordField passwordPF;
+  JTextField usernameTF;
     Login(){
       getContentPane().setBackground(Color.WHITE);
       setLayout(null);
@@ -13,7 +18,7 @@ public class Login extends JFrame{
       usernamelbl.setBounds(40,20,100,30);
       add(usernamelbl);
 
-      JTextField usernameTF = new JTextField();
+      usernameTF = new JTextField();
       usernameTF.setBounds(150,20,150,30);
       add(usernameTF);
 
@@ -21,7 +26,7 @@ public class Login extends JFrame{
       passwordlbl.setBounds(40,70,100,30);
       add(passwordlbl);
 
-      JPasswordField passwordPF = new JPasswordField();
+      passwordPF = new JPasswordField();
       passwordPF.setBounds(150,70,150,30);
       add(passwordPF);
 
@@ -29,6 +34,7 @@ public class Login extends JFrame{
       loginbtn.setForeground(Color.WHITE);
       loginbtn.setBackground(Color.BLACK);
       loginbtn.setBounds(150,120,150,30);
+      loginbtn.addActionListener(this);
       add(loginbtn);
 
       ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/second.jpg"));
@@ -41,7 +47,28 @@ public class Login extends JFrame{
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setVisible(true);
     }
+  @Override
+  public void actionPerformed(ActionEvent e) {
+      String Username = usernameTF.getText();
+      String Password = passwordPF.getText();
+
+    Conn conn = new Conn();
+    String query = "select * from login where username ='"+Username+"'and password = '"+Password+"'";
+    try{
+      ResultSet rs =Conn.s.executeQuery(query);
+      if (rs.next()){
+        setVisible(false);
+        // new class
+      }
+      else {
+        JOptionPane.showMessageDialog(null, "Invalid Username and Password");
+      }
+    }catch (Exception j){
+      System.out.println(j);
+    }
+  }
     public static void main(String [] args){
         new Login();
     }
+
 }
