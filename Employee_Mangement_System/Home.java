@@ -52,11 +52,16 @@ public class Home extends JFrame implements ActionListener {
             setVisible(false);
             new AddEmployee();
         } else if (e.getSource() == view) {
+            setVisible(false);
+            new ViewEmployee();
 
         } else if (e.getSource() == update) {
+            setVisible(false);
+            new ViewEmployee();
 
         }else if (e.getSource() == remove){
-
+            setVisible(false);
+            new RemoveEmployee();
         }
     }
     public static void main(String [] args){
